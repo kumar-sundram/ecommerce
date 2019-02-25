@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const { Category } = require('../models/category')
 const { authenticateUser } = require('../middleware/authenticate')
-const { autherization } = require('../middleware/autherization')
+const { authorization } = require('../middleware/authorization')
 
 //create a category
-router.post('/', authenticateUser, autherization, (req, res) => {
+router.post('/', authenticateUser, authorization, (req, res) => {
     const body = req.body
     const category = new Category(body)
     category.save()
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 })
 
 //edit the data
-router.put('/:_id', authenticateUser, autherization, (req, res) => {
+router.put('/:_id', authenticateUser, authorization, (req, res) => {
     const category = req.body
     const _id = req.params._id
     Category.findOneAndUpdate(_id, category, function (err, data) {
@@ -48,7 +48,7 @@ router.put('/:_id', authenticateUser, autherization, (req, res) => {
 })
 
 //delete 
-router.delete('/:_id', authenticateUser, autherization, (req, res) => {
+router.delete('/:_id', authenticateUser, authorization, (req, res) => {
     const _id = req.params._id
     Category.findOneAndDelete(_id)
         .then((category) => {
