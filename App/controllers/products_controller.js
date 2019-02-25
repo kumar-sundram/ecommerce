@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const { Product } = require('../models/product')
 const { authenticateUser } = require('../middleware/authenticate')
-const { autherization } = require('../middleware/autherization')
+const { authorization } = require('../middleware/authorization')
 const { upload } = require('../middleware/imageUpload')
 
 //Create a product
-router.post('/', upload.single('image'), authenticateUser, autherization, (req, res) => {
+router.post('/', upload.single('image'), authenticateUser, authorization, (req, res) => {
     const body = req.body
     const imageUrl = req.file.destination
     body.imageUrl = imageUrl.slice(1) + req.file.filename
@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
 })
 
 //edit the product
-router.put('/:_id', authenticateUser, autherization, (req, res) => {
+router.put('/:_id', authenticateUser, authorization, (req, res) => {
     const _id = req.params._id
     const product = req.body
     Product.findOneAndUpdate(_id, product, function (err, data) {
@@ -55,7 +55,7 @@ router.put('/:_id', authenticateUser, autherization, (req, res) => {
 })
 
 //delete the product
-router.delete('/:_id', authenticateUser, autherization, (req, res) => {
+router.delete('/:_id', authenticateUser, authorization, (req, res) => {
     const _id = req.params._id
     Product.findOneAndDelete(_id)
         .then((product) => {
