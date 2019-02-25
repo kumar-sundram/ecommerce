@@ -1,6 +1,6 @@
 const { User } = require('../models/user')
 
-function autherization(req, res, next) {
+function authorization(req, res, next) {
     const user = req.user
     if (user.role == "admin") {
         next()
@@ -10,5 +10,5 @@ function autherization(req, res, next) {
 }
 
 module.exports = {
-    autherization
+    authorization
 }
